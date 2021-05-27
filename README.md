@@ -16,7 +16,7 @@ Testavimo kodas:
 #include <iostream>
  
  
-void print_container(const std::vector<int>& c) 
+void print_container(const MyVector<int>& c) 
 {
     for (auto &i : c) {
         std::cout << i << " ";
