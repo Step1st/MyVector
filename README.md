@@ -1,5 +1,10 @@
 # Eksperimentiniai MyVector klasės tyrimai
 
+##  Klasės naudojimas ir veikimo principas
+```MyVector``` tai yra klasė kurį yra alternatyva ```std::vector``` konteineriui turinti pilna jo funkcionalumą.
+###
+Norint pasinaudoti ```MyVector``` konteineriu įkelkite ```MyVector.h``` į jūsų projektą.
+
 ## 1. Funkcijų veikimo pavyzdžiai
 
 ### erase()
@@ -69,7 +74,7 @@ Testavimo kodas:
 int main()
 {
     std::cout << std::boolalpha;
-    std::vector<int> numbers;
+    MyVector<int> numbers;
     std::cout << "Initially, numbers.empty(): " << numbers.empty() << '\n';
  
     numbers.push_back(42);
@@ -159,9 +164,9 @@ Testavimo kodas:
  
 int main()
 {
-    std::vector<int> alice{1, 2, 3};
-    std::vector<int> bob{7, 8, 9, 10};
-    std::vector<int> eve{1, 2, 3};
+    MyVector<int> alice{1, 2, 3};
+    MyVector<int> bob{7, 8, 9, 10};
+    MyVector<int> eve{1, 2, 3};
  
     std::cout << std::boolalpha;
  
@@ -222,7 +227,7 @@ alice >= eve returns true
 ```
 
 
-## 2. Efektyvumo/spartos analizę
+## 2. Efektyvumo/spartos analizę ( push_back(int) )
 
 | Elementų skaičius |   Laikas naudojant std::vector    |   Laikas naudojant MyVector      |
 | ----------------  | --------------------------------- | -------------------------------- | 
@@ -232,5 +237,25 @@ alice >= eve returns true
 | 10000000          |              0.040856 s           |            0.030603 s            | 
 | 100000000         |              0.537259 s           |            0.324867 s            |
 
-MyVector vidutiniškai apie 25% greitesnis už std::vector
+
+## 3. Atminties perskirstymai
+
+| Elementų skaičius |   Perskirstymų skaičius naudojant std::vector    |   Perskirstymų skaičius naudojant MyVector      |
+| ----------------  | ------------------------------------------------ | ----------------------------------------------- | 
+| 10000             |                        18                        |                       11                        | 
+| 100000            |                        24                        |                       15                        | 
+| 1000000           |                        30                        |                       18                        | 
+| 10000000          |                        36                        |                       21                        | 
+| 100000000         |                        41                        |                       25                        |
+
+
+## 4. Efektyvumo/spartos analizę ( v2.0 )
+
+1000000 elementų:
+
+|     Vektoriai    |  Nuskaitymo laikas | Skaičiavimas laikas | Rūšiavimo laikas | Įrašimo į buferį laikas | Pilnas įrašimo laikas |
+| ---------------- |  ----------------- | ------------------- | ---------------- | ----------------------- | --------------------- |
+| std::vector      |   4.517661 s       |   0.019548 s        |   2.915349 s     |  0.807474 s             |    0.911079 s         |
+| MyVector         |     4.357800 s     |    0.015514 s       | 2.680118 s       |   0.822100 s            |    0.925719 s         |
+
 
